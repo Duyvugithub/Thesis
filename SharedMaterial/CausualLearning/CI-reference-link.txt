@@ -1,0 +1,6 @@
+Correlation does not imply causation: https://en.wikipedia.org/wiki/Correlation_does_not_imply_causation?fbclid=IwAR39dmdQnqW1wM7KmLfWI7C915xfRFbMWhzvzxYOhI0KXHt9_CN2wPG5EqM
+
+Introduction to Causality in Machine Learning: https://towardsdatascience.com/introduction-to-causality-in-machine-learning-4cee9467f06f
+
+The Case for Causal AI: https://ssir.org/articles/entry/the_case_for_causal_ai#
+

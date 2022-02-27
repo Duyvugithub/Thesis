@@ -8,3 +8,6 @@ Counterfactual Inference
 
 Transfer learning
 
+AUC
+
+Individual Treatment Effect (ITE)  https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5920646/

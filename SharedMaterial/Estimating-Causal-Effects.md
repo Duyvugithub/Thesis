@@ -7,5 +7,5 @@ D (treatment) = Received College Degree Y/N <br />
 S = observed treatment assignment/ selection variables <br />
 i = Individual <br />
 
+![equation](https://latex.codecogs.com/svg.image?\delta_i&space;=&space;Y^1_{i}&space;-&space;Y^0_{i}&space;)
 
-- <img src="https://latex.codecogs.com/gif.latex?\delta_i=Y^1_{i} - Y^0_{i} " /> 

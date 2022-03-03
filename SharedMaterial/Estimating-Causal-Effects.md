@@ -5,26 +5,30 @@ Giả sử ta cần ước tính tác động nhân quả của của việc có
 Y (outcome)= Thành công ở tuổi 40 <br />
 D (treatment) = Có bằng đại học hay không Y/N <br />
 S = các biến được lựa chọn quan sát <br />
-i (Individual) =  một cá nhân (một mẫu)  <br />
+i (Individual) =  một cá thể (một mẫu)  <br />
+
+**Hiệu ứng tác động cá thể:**
 
 <img src="https://latex.codecogs.com/png.image?\dpi{300}&space;\bg_white&space;\delta_i&space;=&space;Y^1_{i}&space;-&space;Y^0_{i}&space;" title="\bg_white \delta_i = Y^1_{i} - Y^0_{i} " />
 
-$Y^1_i$ - kết quả có thể xảy ra trong treament state cho mẫu i <br>
-$Y^0_i$ Kết quả có thể xảy ra trong control state cho mẫu i
+$Y^1_i$ - kết quả có thể xảy ra (kết quả tiềm năng - potential outcome) trong treament state cho cá thể i <br>
+$Y^0_i$ Kết quả có thể xảy ra trong control state cho cá thể i
 
 $Y_i = Y^1_i \space if \space D_i = 1$ <br>
 $Y_i = Y^0_i\space if \space D_i = 0$ 
 
-Biến tác động (treatment) được biểu diễn là D với D = 1 biểu thị treatment và D = 0 biểu thị control
+Biến can thiệp (treatment) được biểu diễn là D với D = 1 biểu thị treatment và D = 0 biểu thị control
 
 Công thức thường được viết dưới dạng:
 $Y_i = D_iY^1_i + (1 - D_i)Y^0_i$ 
+
+**Avg Treatment Effect(ATE):** $ATE=E[Y^1 - Y^0]$
 
 **Aggregated Causal Effects:**
 $E[\delta_i] = E[Y^1_i] - E[Y^0_i]$
 
 
-**Avg Treatment Effect of the Treated:** $E[\delta_i | D_i = 1] = E[Y^1_i | D_i = 1] - E[Y^0_i|D_i = 1]$
+**Avg Treatment Effect of the Treated (ATET):** $E[\delta_i | D_i = 1] = E[Y^1_i | D_i = 1] - E[Y^0_i|D_i = 1]$
 
 
 **Avg Treatment Effect of the Untreated:** $E[\delta_i | D_i = 0] = E[Y^1_i | D_i = 0] - E[Y^0_i|D_i = 0]$

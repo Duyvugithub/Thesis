@@ -32,7 +32,8 @@
 \titleformat*{\subsection}{\Large\bfseries}
 \titleformat*{\subsubsection}{\large\bfseries}
 %\addbibresource{ref.bib}
-
+\usepackage{wrapfig}
+\usepackage[export]{adjustbox}
 
 \begin{document}
     \begin{figure}[h]
@@ -97,7 +98,7 @@
        %Chọn loại thích hợp
         \item \textbf{Loại đề tài:} Nghiên cứu
         
-        \item \textbf{Thời gian thực hiện:} Từ \textit{1/2022} đến \textit{7/2022}
+        \item \textbf{Thời gian thực hiện:} Từ \textit{1/2022} đến \textit{6/2022}
         
         
     \end{itemize}
@@ -164,17 +165,13 @@
         
     Để đạt được kết quả như trên, nhóm sẽ thực hiện theo một kế hoạch như sau:
     \begin{enumerate}
-        
-            \item Tìm hiểu về lý thuyết và các thuật ngữ, tài liệu tham khảo liên quan đến bài báo. Giai đoạn này khá quan trọng nên nhóm dành 3 tháng (từ tháng 1/2022 đến hết tháng 3/2022). Trong đó sinh viên Nguyễn Duy Vũ sẽ tìm hiểu các kiến thức liên quan đến việc xây dựng một hệ thống gợi ý  và một vài phương pháp hàng đầu (state of the art) trong lĩnh vực này, sinh viên Nguyễn Chiêu Bản tìm hiểu các kiến thức về suy diễn nhân quả được nhắc tới trong bài báo gốc, đồng thời giải thích tại sao cần có Suy diễn Nhân quả trong học máy và cách mà nó làm cho một mô hình học máy trở nên đáng tin cậy hơn.
-            \item Nhóm dành một tháng tiếp theo (từ đầu tháng 4/2022 đến cuối tháng 4/2022) để tìm hiểu chi tiết về bài báo từ những kiến thức tìm hiểu được trong phần trước đó. Tương tự như trên, những phần lý thuyết về hệ thống gợi ý sẽ được sinh viên Nguyễn Duy Vũ tìm hiểu, phần còn lại do sinh viên Nguyễn Chiêu Bản phụ trách. Sau đó, những phần thực hiện và tìm phần hiểu được sẽ được trao đổi  cho thành viên còn lại. 
-            \item Từ những hiểu biết trên, các thành viên trong nhóm sẽ cùng nhau thực hiện lại thực nghiệm theo phương pháp đã tìm hiểu và một vài phương pháp truyền thống để đối chứng. Quá trình này dự kiến sẽ kéo dài một tháng rưỡi (từ đầu tháng 5/2022 đến nữa đầu tháng 6/2022).
-            \item Song song với việc thực hiện các thử nghiệm, nhóm sẽ bắt đầu viết báo cáo từ đầu tháng 5/2022 dự kiến hoàn thành và chỉnh sửa cho đến khi kết thúc thời gian thực hiện khóa luận.
+        \item Tìm hiểu về lý thuyết và các thuật ngữ, tài liệu tham khảo liên quan đến bài báo. Giai đoạn này khá quan trọng nên nhóm dành 3 tháng (từ tháng 1/2022 đến hết tháng 3/2022). Trong đó sinh viên Nguyễn Duy Vũ sẽ tìm hiểu các kiến thức liên quan đến việc xây dựng một hệ thống gợi ý  và một vài phương pháp hàng đầu (state of the art) trong lĩnh vực này, sinh viên Nguyễn Chiêu Bản tìm hiểu các kiến thức về suy diễn nhân quả được nhắc tới trong bài báo gốc, đồng thời giải thích tại sao cần có Suy diễn Nhân quả trong học máy và cách mà nó làm cho một mô hình học máy trở nên đáng tin cậy hơn.
+        \item Nhóm dành một tháng tiếp theo (từ đầu tháng 4/2022 đến cuối tháng 4/2022) để tìm hiểu chi tiết về bài báo từ những kiến thức tìm hiểu được trong phần trước đó. Tương tự như trên, những phần lý thuyết về hệ thống gợi ý sẽ được sinh viên Nguyễn Duy Vũ tìm hiểu, phần còn lại do sinh viên Nguyễn Chiêu Bản phụ trách. Sau đó, những phần thực hiện và tìm phần hiểu được sẽ được trao đổi  cho thành viên còn lại. 
+        \item Từ những hiểu biết trên, các thành viên trong nhóm sẽ cùng nhau thực hiện lại thực nghiệm theo phương pháp đã tìm hiểu và một vài phương pháp truyền thống để đối chứng. Quá trình này dự kiến sẽ kéo dài một tháng rưỡi (từ đầu tháng 5/2022 đến nữa đầu tháng 6/2022).
+        \item Song song với việc thực hiện các thử nghiệm, nhóm sẽ bắt đầu viết báo cáo từ đầu tháng 5/2022 dự kiến hoàn thành và chỉnh sửa cho đến khi kết thúc thời gian thực hiện khóa luận.
         \end{enumerate}
     
-    
- 
-    
-    
+
     }
     %TÀI LIỆU TRÍCH DẪN
     %Đây là ví dụ
@@ -184,9 +181,21 @@
 
     \begin{table}[h]
     \centering
-        \begin{tabular}{p{7cm}p{7cm}}
-        \textbf{\begin{tabular}[c]{@{}c@{}}\\XÁC NHẬN\\CỦA NGƯỜI HƯỚNG DẪN\\ \textit{(Ký và ghi rõ họ tên)}\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}\textit{TP. Hồ Chí Minh, ngày/tháng/năm}\\NHÓM SINH VIÊN THỰC HIỆN\\\textit{(Ký và ghi rõ họ tên}) \end{tabular}}
+        \begin{tabular}{p{7cm}p{9cm}}
+        \textbf{\begin{tabular}[c]{@{}c@{}}XÁC NHẬN\\CỦA NGƯỜI HƯỚNG DẪN\\ \textit{(Ký và ghi rõ họ tên)}\end{tabular}}& 
+        \textbf{\begin{tabular}[c]{@{}c@{}}\textit{TP. Hồ Chí Minh, ngày 2 tháng 4 năm 2022}\\NHÓM SINH VIÊN THỰC HIỆN\\\textit{(Ký và ghi rõ họ tên})\end{tabular}}
         \end{tabular}
+        
+        \begin{tabular}{p{8cm}p{7cm}}
+        &\textbf{\begin{tabular}[c]{@{}c@{}}\includegraphics[width=0.3\textwidth]{duyvu.jpg}\\\end{tabular}}\\
+        
+        \textbf{\begin{tabular}[c]{@{}c@{}}TRẦN TRUNG KIÊN \end{tabular}}& 
+        \textbf{\begin{tabular}[c]{c}NGUYỄN DUY VŨ\end{tabular}}\\
+        &\textbf{\begin{tabular}[c]{@{}c@{}}\includegraphics[width=0.3\textwidth]{chieuban.jpg}\\\end{tabular}}\\
+        
+        \textbf{\begin{tabular}[c]{@{}c@{}}NGUYỄN NGỌC THẢO \end{tabular}}& 
+        \textbf{\begin{tabular}[c]{c}NGUYỄN CHIÊU BẢN\end{tabular}}
+        \end{tabular}\\
     \end{table}
     
 \end{document}

@@ -28,6 +28,8 @@
 % Chèn hình, các hình trong luận văn được để trong thư mục Images/
 \usepackage{graphicx}
 \graphicspath{ {Images/} }
+\usepackage{caption}
+\usepackage{subcaption}
 
 % Chèn và định dạng mã nguồn
 \usepackage{listings}
@@ -57,12 +59,15 @@
 \lstset{style=mystyle}
 
 % Chèn và định dạng mã giả
-\usepackage{amsmath}
+\usepackage{amsmath, amssymb}
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 \makeatletter
 \def\BState{\State\hskip-\ALG@thistlm}
 \makeatother
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Bổ đề}
 
 % Bảng biểu
 \usepackage{multirow}
@@ -95,6 +100,9 @@
   right=20mm,
   includefoot]{geometry}
   
+\usepackage{amsmath}
+\usepackage{amssymb}  
+  
 % Trang bìa
 \usepackage{tikz}
 \usetikzlibrary{calc}
@@ -103,11 +111,11 @@
 % ========================================================================================= %
 % CHÚ Ý: Thông tin chung về KLTN - sinh viên điền vào đây để tự động update các trang khác  %
 % ========================================================================================= %
-\newcommand{\tenSV}{Nguyễn~Văn~A~-~Trần~Văn~B} % Dấu ~ là khoảng trắng không được tách (các chữ nối với nhau bằng dấu ~ sẽ nằm cùng 1 dòng
-\newcommand{\mssv}{1234567}
+\newcommand{\tenSV}{Nguyễn~Duy~Vũ~-~Nguyễn~Chiêu~Bản} % Dấu ~ là khoảng trắng không được tách (các chữ nối với nhau bằng dấu ~ sẽ nằm cùng 1 dòng
+\newcommand{\mssv}{18120264~-~18120283}
 \newcommand{\tenKL}{Sử~dụng~LaTeX trong Khoá~luận~tốt~nghiệp} % Chú ý dấu ~ trong tên khóa luận
-\newcommand{\tenGVHD}{Tên~Giáo~Viên}
-\newcommand{\tenBM}{Công nghệ tri thức}
+\newcommand{\tenGVHD}{Th.S.~Trần~Trung~Kiên~-~TS.~Nguyễn~Ngọc~Thảo}
+\newcommand{\tenBM}{Khoa học máy tính}
 
 \begin{document}
 
@@ -145,9 +153,14 @@
 
 \include{Chapter3/chapter3}
 
+\include{Chapter4/chapter4}
+
+\include{Chapter5/chapter5}
+
+
 % Công trình của tác giả (nếu không có thì comment 02 dòng dưới)
-\addcontentsline{toc}{chapter}{Danh mục công trình của tác giả}
-\include{Appendix/publish}
+%\addcontentsline{toc}{chapter}{Danh mục công trình của tác giả}
+%\include{Appendix/publish}
 
 % In tài liệu tham khảo
 \addcontentsline{toc}{chapter}{Tài liệu tham khảo}
@@ -158,7 +171,7 @@
 \DeclareNameAlias{sortname}{last-first}
 \DeclareNameAlias{default}{last-first}
 
-\printbibliography[heading=subbibliography, title={Tiếng Anh}, notkeyword=Viet, resetnumbers=4] 
+\printbibliography[heading=subbibliography, title={Tiếng Anh}, notkeyword=Viet, resetnumbers=15] 
 % ===================================================================== %
 % CHÚ Ý: phải gán lại resetnumbers=số tài liệu tham khảo tiếng Việt + 1 %
 % ===================================================================== %

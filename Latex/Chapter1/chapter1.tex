@@ -13,33 +13,37 @@
 Trong chương này, đầu tiên nhóm chúng em phát biểu về bài toán đề xuất sản phẩm cũng như là ý nghĩa của nó đối với cuộc sống hiện nay. Sau đó, nhóm chúng em trình bày về vấn đề thiên lệch dữ liệu, một thách thức lớn của bài toán đề xuất sản phẩm. Từ đó dẫn đến phương pháp nhóm chúng em tìm hiểu ``Inverse propensity scoring'' (IPS) để khắc phục vấn đề thiên lệch dữ liệu này. Ngoài ra, ở cuối chương nhóm chúng em sẽ trình bày về cách tổ chức của khóa luận.
 
 \section{Phát biểu và ý nghĩa của bài toán}
-Ngày nay, với sự phát triển của công nghệ thông tin ngày càng sinh ra rất nhiều loại sản phẩm khác nhau. Điều này tạo nên thách thức cho người dùng là làm thế nào để có thể tìm thấy được các sản phẩm phù hợp với bản phân giữa một lượng sản phẩm khổng lồ như vậy. Do đó hệ thống đề xuất sản phẩm đã ra đời nhằm mục đích hỗ trợ cho người dùng trong quá trình tìm kiếm nội dung phù hợp cho bản thân..
+Ngày nay, các loại sản phẩm phục vụ cho đời sống con người được sinh ra ngày một nhiều. Điều này tạo nên thách thức cho người dùng là làm thế nào để có thể tìm thấy được các sản phẩm phù hợp với bản phân giữa một lượng sản phẩm khổng lồ như vậy. Do đó hệ thống đề xuất sản phẩm đã ra đời nhằm mục đích hỗ trợ cho người dùng trong quá trình tìm kiếm nội dung phù hợp cho bản thân..
 
 Các hệ thống đề xuất sản phẩm giúp cho trải nghiệm của người dùng được cá nhân hóa, giúp tiết kiệm thời gian cho người dùng trong việc lựa chọn sản phẩm. Mặt khác, đối với các công ty nó còn tăng cao lợi thế cạnh tranh, kích thích nhu cầu mua sắm của người dùng bằng các gợi ý sản phẩm. Có thể kể đến các hệ thống đề xuất sản phẩm nổi tiếng như: hệ thống đề xuất phim của Netflix, hay hệ thống đề xuất video của Youtube, hệ thống đề xuất nhạc của Spotify và nhiều loại hệ thống đề xuất khác nữa.
 
-Bài toán hệ thống đề xuất sản phẩm sẽ được phát biểu như sau (minh họa ở hình \ref{fig:chap1_rs}):
+Bài toán hệ thống đề xuất sản phẩm sẽ được phát biểu như sau (hình \ref{fig:chap1_rs} minh hoạ về cách thức hoạt động của hệ thống đề xuất phim):
 \begin{itemize}
-    \item Đầu vào là dữ liệu về điểm đánh giá của các người dùng đối với các sản phẩm trong hệ thống (ngoài ra, còn có thể có thêm dữ liệu về thông tin của mỗi người dùng và mỗi sản phẩm).
+    \item Đầu vào là dữ liệu về điểm đánh giá của các người dùng đối với các sản phẩm trong hệ thống; dữ liệu này sẽ được đưa vào mô hình dưới dạng một ma trận tương tác thưa với mỗi dòng là các đánh giá của người dùng cho các sản phẩm. Ngoài ra, còn có thể có thêm dữ liệu về thông tin của mỗi người dùng và mỗi sản phẩm; dữ liệu này được đưa vào mô hình dưới dạng 2 ma trận thuộc tính của người dùng và sản phẩm, các điểm dữ liệu trong ma trận thuộc tính sẽ được tiền xử lý thành dạng số.
+
     \item Yêu cầu: đề xuất các sản phẩm trong hệ thống mà phù hợp với sở thích của mỗi người dùng (để có thể đề xuất thì một cách làm phổ biến là dự đoán điểm đánh giá của người dùng đối với các sản phẩm mà người dùng chưa đánh giá).
 \end{itemize}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{Chapter1/RS.png}
+    \includegraphics[width=\textwidth]{images/Chapter1/rs.png}
     \caption{Cách thức hoạt động của hệ thống đề xuất sản phẩm}
     \label{fig:chap1_rs}
 \end{figure}
+
+Cụ thể hơn, đầu vào của hệ thống sẽ là ma trận tương tác (chứa điểm đánh giá của các người dùng cho
 
 Trong phạm vi đề tài của khóa luận nhóm chúng em sẽ tiến hành xử lý trên dữ liệu explicit feedback. Explicit feedback là dữ liệu cho biết rõ ràng mức độ ưa thích của người dùng đối với sản phẩm, chẳng hạn như điểm đánh giá của người dùng cho 1 bộ phim từ 1 đến 5. 
 
 
 \section{Thách thức của bài toán}
-Để huấn luyện được mô hình có thể đề xuất chính xác tất cả các sản phẩm cho người dùng, ta cần một bộ dữ liệu đầy đủ bao gồm đánh giá của tất cả người dùng cho tất cả sản phẩm. Tuy nhiên dữ liệu này không thể có được trong thực tế, do người dùng không thể nào xem và đánh giá tất cả các sản phẩm trong hệ thống. Vì vậy để mô hình có thể huấn luyện được tốt nhất ta cần bộ dữ liệu quan sát được phải được phát sinh từ phân phối đều của bộ dữ liệu đầy đủ này, vì bộ dữ liệu quan sát được này sẽ phản ánh được phần nào bộ dữ liệu đầy đủ và nó được gọi là dữ liệu không bị thiên lệch. 
+Để huấn luyện được mô hình có thể đề xuất chính xác tất cả các sản phẩm cho người dùng, ta cần một bộ dữ liệu đầy đủ bao gồm đánh giá của tất cả người dùng cho tất cả sản phẩm. Tuy nhiên dữ liệu này không thể có được trong thực tế, do người dùng không thể nào xem và đánh giá tất cả các sản phẩm trong hệ thống. Vì vậy để mô hình có thể huấn luyện được tốt nhất ta cần bộ dữ liệu quan sát được phải được phát sinh từ phân phối đều của bộ dữ liệu đầy đủ này, vì bộ dữ liệu quan sát được này sẽ đại diện cho bộ dữ liệu đầy đủ và nó được gọi là dữ liệu không bị thiên lệch. 
 
-Dữ liệu quan sát được trong bài toán đề xuất sản phẩm thường bị gặp vấn đề lớn về thiên lệch dữ liệu. Thiên lệch dữ liệu: Dữ liệu quan sát được không được phát sinh từ phân phối đều, do đó nó không phản ánh được phần nào bộ dữ liệu đầy đủ. Bắt nguồn từ 2 nguyên nhân chính trong việc thu thập dữ liệu sau:
+Dữ liệu quan sát được trong bài toán đề xuất sản phẩm thường bị gặp vấn đề lớn về thiên lệch dữ liệu. Thiên lệch dữ liệu là dữ liệu quan sát được không được phát sinh từ phân phối đều, do đó nó không đại diện được cho bộ dữ liệu đầy đủ. Bắt nguồn từ 2 nguyên nhân chính trong việc thu thập dữ liệu sau:
 \begin{itemize}
-    \item Do người dùng tự chọn các bộ phim để đánh giá, thay vì dựa trên việc người dùng đánh giá một tập các sản phẩm ngẫu nhiên, việc người dùng đánh giá trên một tập các sản phẩm ngẫu nhiên để đảm bảo tính độc lập và phân phối giống nhau của dữ liệu.
-    Một kết quả nghiên cứu của tác giả Marlin và các cộng sự \cite{bias} đã cho thấy tác động rõ ràng của thiên lệch dữ liệu. Họ đã tiến hành một cuộc khảo sát người dùng để thu thập dữ liệu điểm đánh giá của người dùng đối với một số sản phẩm được lựa chọn ngẫu nhiên, để so sánh với các sản phẩm do người dùng tự lựa chọn. Hình \ref{fig:self_selection_bias} đã cho thấy rõ sự khác nhau trong phân phối dữ liệu của việc lựa chọn ngẫu nhiên và do người dùng đánh giá và đưa ra 2 phát hiện: 1) người dùng có xu hướng chọn và đánh giá các mặt hàng họ thích; và 2) người dùng có nhiều khả năng xếp hạng các mặt hàng đặc biệt xấu hoặc đặc biệt tốt.
+    \item Do người dùng tự chọn các bộ phim để đánh giá, thay vì dựa trên việc người dùng đánh giá một tập các sản phẩm ngẫu nhiên.
+    Việc người dùng đánh giá trên một tập các sản phẩm được đề xuất ngẫu nhiên sẽ đảm bảo dữ liệu thu được được phát sinh từ phân phối đều, giúp cho dữ liệu thu được có thể đại diện được cho tập dữ liệu đầy đủ.
+    Một kết quả nghiên cứu của tác giả Marlin và các cộng sự \cite{bias} đã cho thấy tác động rõ ràng của thiên lệch dữ liệu. Họ đã tiến hành một cuộc khảo sát người dùng để thu thập dữ liệu điểm đánh giá của người dùng đối với một số sản phẩm được lựa chọn ngẫu nhiên, để so sánh với các sản phẩm do người dùng tự lựa chọn. Hình \ref{fig:self_selection_bias} cho thấy rõ sự khác nhau trong phân phối dữ liệu của việc lựa chọn ngẫu nhiên và do người dùng đánh giá và đưa ra 2 phát hiện: 1) người dùng có xu hướng chọn và đánh giá các mặt hàng họ thích; và 2) người dùng có nhiều khả năng xếp hạng các mặt hàng đặc biệt xấu hoặc đặc biệt tốt.
     \item Do hệ thống đề xuất chỉ chọn các bộ phim nào đó để hiển thị cho người dùng, trong trường hợp hệ thống đề xuất sản phẩm đã triển khai từ trước. Với tác động của hệ thống đề xuất như vậy, người dùng chỉ có thể xem và đánh giá trên các bộ phim được hiển thị, điều này làm cho dữ liệu thu thập được chỉ tập trung vào một vài loại sản phẩm nào đó, không đại diện cho toàn bộ dữ liệu.
 \end{itemize}
 
@@ -47,39 +51,37 @@ Dữ liệu quan sát được trong bài toán đề xuất sản phẩm thư�
     \centering
     \begin{subfigure}[b]{0.4\textwidth}
      \centering
-     \includegraphics[width=\textwidth]{Chapter1/bias_1.png}
+     \includegraphics[width=\textwidth]{images/Chapter1/bias_1.png}
      \caption{Các sản phẩm được chọn ngẫu nhiên.}
      \label{fig:randomly_selected}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.4\textwidth}
      \centering
-     \includegraphics[width=\textwidth]{Chapter1/bias_2.png}
-     \caption{Các sản phẩm được chọn do người dùng.}
+     \includegraphics[width=\textwidth]{images/Chapter1/bias_2.png}
+     \caption{Các sản phẩm được chọn do người dùng tự lựa chọ.n}
      \label{fig:user_selected}
     \end{subfigure}
-    \caption{Phân phối điểm đánh giá sản phẩm được chọn ngẫu nhiên và do người dùng chọn.}
+    \caption{Phân phối điểm đánh giá sản phẩm, được thu thập bằng cách cho người dùng đánh giá các sản phẩm ngẫu nhiên và cho người dùng đánh giá các sản phẩm tự lựa chọn.}
     \label{fig:self_selection_bias}
 \end{figure}
 
 Để hiểu rõ hơn về vấn đề thiên lệch dữ liệu ta sẽ xem xét một ví dụ nhỏ trong hệ thống đề xuất phim, minh họa tác động của thiên lệch dữ liệu có thể gây ra cho việc đánh giá mô hình. Hình \ref{fig:chap1_ex_1} minh họa cho thí nghiệm của ta trong đó:
 \begin{itemize}
     \item Ma trận $Y$ là ma trận đầy đủ chứa đánh giá của tất cả người dùng đối với tất cả các sản phẩm, trong ma trận này bao gồm 2 nhóm nhỏ: 1) những người dùng yêu thích phim kinh dị, họ sẽ đánh giá 5 điểm cho tất cả các phim kinh dị và 1 điểm cho tất cả các phim lãng mãn mà họ đã xem; nhóm trái ngược 2) những người dùng yêu thích phim lãng mạn, họ sẽ đánh giá 1 điểm cho tất cả các phim kinh dị và 5 điểm cho tất cả các phim lãng mạn mà họ đã xem; và cả 2 nhóm người dùng đều đánh giá cho  thể loại phim kịch là 3. 
-    \item Ma trận $\hat{Y}$ là ma trận đại diện cho điểm đánh giá dự đoán của mô hình chúng ta xem xét. 
     \item Ma trận $O$ là ma trận nhị phân chứa 2 giá trị 0 và 1, đại diện cho những sản phẩm người dùng đã đánh giá trong hệ thống, \( [O_{u,i}~=~1]\Leftrightarrow[Y_{u,i} \) được quan sát].
 \end{itemize}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{Chapter1/example_bias_1.png}
+    \includegraphics[width=\textwidth]{images/Chapter1/example_bias_1.png}
     \caption{Ví dụ minh họa tác động của thiên lệch dữ liệu. 
-    $Y$ là những con số nằm bên dưới ma trận.
-    $O$ là những điểm đánh giá của người dùng cho các sản phẩm.
-    $\hat{Y}$ là những điểm đánh giá được tô màu.}
+    $Y$ là những điểm đánh giá thật của dữ liệu, minh họa bằng những con số nằm bên dưới ma trận.
+    $O$ là những điểm đánh giá quan sát được, minh họa bằng những điểm đánh giá của người dùng cho các sản phẩm.}
     \label{fig:chap1_ex_1}
 \end{figure}
 
-Các dự đoán $\hat{Y}_1$ và  $\hat{Y}_2$ sẽ được dùng để dự đoán giá trị cho các điểm đánh giá chưa quan sát được. Hình \ref{fig:chap1_ex_2} sẽ minh họa cách 2 mô hình dự đoán như sau:
+Xét 2 cách dự đoán $\hat{Y}_1$ và  $\hat{Y}_2$ sẽ được dùng để dự đoán giá trị cho các điểm đánh giá chưa quan sát được. Hình \ref{fig:chap1_ex_2} sẽ minh họa cách 2 mô hình dự đoán như sau:
 \begin{itemize}
     \item Ở cách dự đoán $\hat{Y}_1$, những điểm đánh giá có giá trị thật là 1 sẽ được dự đoán là 5, các điểm đánh giá có giá trị thật là 3 và 5 sẽ được dự đoán đúng giá trị.
     \item Ở cách dự đoán $\hat{Y}_2$, những điểm đánh giá có giá trị thật là 3 sẽ được dự đoán là 5, các điểm đánh giá có giá trị thật là 3 và 5 sẽ được dự đoán đúng giá trị.
@@ -87,7 +89,7 @@ Các dự đoán $\hat{Y}_1$ và  $\hat{Y}_2$ sẽ được dùng để dự đo
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{Chapter1/example_bias_2.png}
+    \includegraphics[width=\textwidth]{images/Chapter1/example_bias_2.png}
     \caption{Các cách dự đoán $\hat{Y}_1$ và $\hat{Y}_2$ trên tập dữ liệu}
     \label{fig:chap1_ex_2}
 \end{figure}
@@ -100,7 +102,7 @@ Khi đánh giá cách dự đoán nào là tốt trên tập dữ liệu quan s�
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{Chapter1/example_bias_3.png}
+    \includegraphics[width=\textwidth]{images/Chapter1/example_bias_3.png}
     \caption{Đánh giá 2 mô hình dự đoán $\hat{Y}_1$, $\hat{Y}_2$ dựa trên các mâu quan sát được }
     \label{fig:chap1_ex_3}
 \end{figure}

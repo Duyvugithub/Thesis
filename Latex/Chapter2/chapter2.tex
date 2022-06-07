@@ -5,7 +5,7 @@ Trong chương này, đầu tiên nhóm chúng em trình bày về thuật toán
 
 \section{``Matrix factorization''}
 ``Matrix factorization'' là một phương pháp thuộc nhóm lọc cộng tác (collaborative filtering), một nhóm các phương pháp tập trung vào mối quan hệ giữa các người dùng dựa trên đánh giá của các người dùng trong hệ thống. 
-Phương pháp ``Matrix factorization'' sẽ phân tích ma trận tương tác $R \in \mathbb{R}^{m \times n}$ thành tích của hai ma trận $P \in \mathbb{R}^{m \times k}$ và $\mathbf{W} \in \mathbb{R}^{k \times n}$ (hình \ref{fig:chap2_MF1} mình họa về việc phân tách ma trận tương tác $R$), trong đó: $P$ và  $Q$ là ma trận đặc trưng của người dùng và sản phẩm; $k$ là hyperparameter được điều chỉnh trong quá trình huấn luyện mô hình, đại diện cho kích thước của đặc trưng tiềm ẩn.
+Phương pháp ``Matrix factorization'' sẽ phân tích ma trận tương tác $R \in \mathbb{R}^{m \times n}$ thành tích của hai ma trận $P \in \mathbb{R}^{m \times k}$ và $\mathbf{W} \in \mathbb{R}^{k \times n}$ (hình \ref{fig:chap2_MF1} mình họa về việc phân tách ma trận tương tác $R$), trong đó: $P$ và  $Q$ là ma trận đại diện cho người dùng và sản phẩm; $k$ là hyperparameter được điều chỉnh trong quá trình huấn luyện mô hình, đại diện cho kích thước của đặc trưng tiềm ẩn.
 
 \begin{figure}[h]
     \centering

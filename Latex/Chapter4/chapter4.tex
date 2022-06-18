@@ -1,9 +1,48 @@
 \chapter{Các kết quả thí nghiệm}
 \label{Chapter4}
 
-Trong chương này, nhóm chúng em trình bày các kết quả thí nghiệm để đánh giá các đề xuất tìm hiểu được từ bài báo đã được nói ở chương trước. Bộ dữ liệu được dùng để tiến hành thí nghiệm là bộ COAT (bao gồm đánh giá của người dùng cho áo khoác), bộ Yahoo (bao gồm đánh giá của người dùng cho các bài hát), bộ Movielens 100K (bao gồm đánh giá của người dùng cho các bộ phim). Các kết quả thí nghiệm cho thấy khi khi dùng IPS đánh giá mô hình hoàn toàn khớp với hiệu suất thật và tốt hơn nhiều so với các độ đo đánh giá truyền thống. Các kết quả thí nghiệm cũng cho thấy mô hình được huấn luyện dựa trên độ đo IPS cũng cho kết quả tổng quát hóa tốt hơn trên các mức độ selection bias khác nhau.
+\noindent\textit{Trong chương này, nhóm chúng em trình bày các kết quả thí nghiệm để đánh giá các đề xuất tìm hiểu được từ bài báo đã được nói ở chương trước. Bộ dữ liệu được dùng để tiến hành thí nghiệm là bộ COAT (bao gồm đánh giá của người dùng cho áo khoác), bộ Yahoo (bao gồm đánh giá của người dùng cho các bài hát), bộ Movielens 100K (bao gồm đánh giá của người dùng cho các bộ phim). Các kết quả thí nghiệm cho thấy khi khi dùng IPS đánh giá mô hình hoàn toàn khớp với hiệu suất thật và tốt hơn nhiều so với các độ đo đánh giá truyền thống. Các kết quả thí nghiệm cũng cho thấy mô hình được huấn luyện dựa trên độ đo IPS cũng cho kết quả tổng quát hóa tốt hơn trên các mức độ selection bias khác nhau.}
 
 \section{Các thiết lập thí nghiệm}
-\section{Đánh giá các phương pháp ước lượng điểm xu hướng}
-\section{Đánh giá các phương pháp phân rã ma trận}
+\label{sec:4_setup}
+Nhóm chúng em tiến hành thí nghiệm đánh giá hiệu suất trên 2 bộ dữ liệu thế giới thực; 2 bộ dữ liệu thế giới thực này đều có tập kiểm tra (test) riêng biệt, trong đó đánh giá của các người dùng đều từ một tập các sản phẩm được lấy ngẫu nhiên theo phân phối đều.
+\begin{itemize}
+    \item Tập dữ liệu Yahoo! R3: tập dữ liệu này chứa đánh giá của các người dùng cho các bài hát. Tập dữ liệu huấn luyện bị thiên lệch cung cấp hơn 300 nghìn đánh giá cho các bài hát, các bài hát này được tự lựa chọn bởi 15400 người dùng. Tập dữ liệu kiểm tra chứa đánh giá của 5400 người dùng cho 10 bài hát được chọn ngẫu nhiên theo phân phối đều.
+    \item Tập dữ liệu Coat Shopping: tập dữ liệu này chứa đánh giá của các người dùng cho các áo khoác, được thu thập bằng cách mô phỏng dữ liệu bị thiên lệch của những người dùng mua áo khoác trong cửa hàng trực tuyến. Những người dùng được yêu cầu phải đánh giá 24 chiếc áo khoác họ tự chọn và 16 chiếc áo khoác được chọn ngẫu nhiên theo phân phối đều dựa trên thang điểm từ 1 đến 5. Tập dữ liệu chứa đánh giá từ 290 người dùng cho 300 sản phẩm. Các điểm đánh giá do người dùng tự lựa chọn sẽ được sử dụng làm tập huấn luyện, đồng thời, các điểm đánh giá trên tập các sản phẩm ngẫu nhiên sẽ được dùng để kiểm tra. 
+\end{itemize}
+
 \section{Đánh giá hiệu suất trên dữ liệu thế giới thực}
+\label{sec:4_performance}
+Mục tiêu: Nhằm đánh giá hiệu suất của mô hình ``Matrix factorization'' tiêu chuẩn (MF-Standard) và ``Matrix factorization'' (MF-IPS) sử dụng độ đo IPS trên 2 tập dữ liệu thế giới thực là Yahoo và Coat.
+
+Để sử dụng độ đo IPS trong việc huấn luyện mô hình ``Matrix Factorization'' trên 2 bộ dữ liệu ta tiến hành như sau:
+\begin{itemize}
+    \item Tập dữ liệu Yahoo: ta ước lượng ma trận xu hướng bằng phương pháp ``Naive Bayes''. Xác suất biên $P(Y=r)$ sẽ được tính toán thông qua 5\% của tập kiểm tra và 95\% còn lại sẽ được sử dụng để kiểm tra mô hình.
+    \item Tập dữ liệu Coat: ta ước lượng ma trận xu hướng bằng phương pháp ``Logistic Regression'' dựa trên hiệp biến của người dùng (giới tính, nhóm tuổi, vị trí và nhận thức về thời trang) và hiệp biến của sản phẩm (giới tính, loại áo khoác, màu sắc, và nó đã được khuyến mãi chưa). Mô hình ``Logistic Regression'' sẽ được huấn luyện bằng cách sử dụng tất cả các cặp hiệp biến của người dùng và sản phẩm làm các đặc trưng đầu vào, với nhãn là điểm đánh giá của người dùng cho các sản phẩm tương ứng; mô hình sẽ được cross-validation để tối ưu trên tập dữ liệu quan sát được do người dùng tự lựa chọn.
+\end{itemize}
+
+Kết quả: Bảng \ref{tab:4_performance} cho thấy hiệu suất của mô hình MF-IPS khi so sánh với MF-Standard, có thể thấy phương pháp MF-IPS có hiệu suất vượt trội hơn đáng kể khi so sánh với phương pháp thông thường.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|ll|ll|}
+    \hline
+    \multirow{2}{*}{} & \multicolumn{2}{c|}{Yahoo} & \multicolumn{2}{c|}{Coat} \\ \cline{2-5} 
+     & \multicolumn{1}{l|}{MAE} & MSE & \multicolumn{1}{l|}{MAE} & MSE \\ \hline
+    MF-IPS & \multicolumn{1}{l|}{0.810} & 0.989 & \multicolumn{1}{l|}{0.860} & 1.093 \\ \hline
+    MF-Standard & \multicolumn{1}{l|}{1.154} & 1.891 & \multicolumn{1}{l|}{0.920} & 1.202 \\ \hline
+    \end{tabular}
+    \caption{Hiệu suất trên 2 tập dữ liệu Yahoo và Coat}
+    \label{tab:4_performance}
+\end{table}
+
+\section{Dữ liệu thiên lệch ảnh hưởng đến việc đánh giá như thế nào?}
+\label{sec:4_evaluate}
+
+
+
+% \section{Dữ liệu thiên lệch ảnh hưởng đến việc học như thế nào?}
+% \label{sec:4_learning}
+% \section{Tính mạnh mẽ của điểm xu hướng đã học không chính xác trong việc học và đánh giá mô hình như thế nào?}
+% \label{sec:4_robust}
+

@@ -1,9 +1,10 @@
 \chapter{Kiến thức nền tảng}
 \label{Chapter2}
 
-\noindent \textit{Trong chương này, đầu tiên nhóm chúng em trình bày về thuật toán ``Matrix factorization'' - thuật toán đề xuất sản phẩm bằng cách phân rã ma trận tương tác. Sau đó nhóm chúng em sẽ trình bày về thuật toán ``Gradient descent'' - thuật toán mà nhóm chúng em sẽ sử dụng để cực tiểu hóa hàm chi phí của  ``Matrix factorization''. Ngoài ra, nhóm chúng em còn trình bày về ``Naive bayes'' và ``Logistic regression'' - hai mô hình phân lớp mà nhóm chúng em sẽ sử dụng để tìm ma trận xu hướng trong IPS. Chương này, đặc biệt là về phần ``Matrix factorization'' cung cấp những kiến thức nền tảng để có thể hiểu rõ về những cải tiến mà nhóm em tìm hiểu ở chương kế tiếp.}
+\noindent \textit{Trong chương này, đầu tiên nhóm chúng em trình bày về thuật toán ``Matrix factorization'' - thuật toán đề xuất sản phẩm bằng cách phân rã ma trận tương tác. Sau đó nhóm chúng em sẽ trình bày về thuật toán ``Gradient descent'' - thuật toán mà nhóm chúng em sẽ sử dụng để cực tiểu hóa hàm chi phí của  ``Matrix factorization''. Ngoài ra, nhóm chúng em còn trình bày về ``Naive bayes'' và ``Logistic regression'' - hai mô hình phân lớp mà nhóm chúng em sẽ sử dụng để ước lượng propensity trong IPS. Chương này, đặc biệt là về phần ``Matrix factorization'' cung cấp những kiến thức nền tảng để có thể hiểu rõ về những cải tiến mà nhóm em tìm hiểu ở chương kế tiếp.}
 
 \section{``Matrix factorization''}
+\label{section:MF}
 ``Matrix factorization'' là một phương pháp thuộc nhóm lọc cộng tác (collaborative filtering), một nhóm các phương pháp tập trung vào mối quan hệ giữa các người dùng, dựa trên đánh giá của các người dùng trước đó trong hệ thống. Các phương pháp lọc cộng tác này sẽ dựa trên ý tưởng những người dùng có cùng sở thích đối với một số sản phẩm nhất định, thì cũng có cùng sở thích đối với sản phẩm khác; do đó nó sẽ đề xuất sản phẩm cho người dùng dựa trên các sản phẩm mà người dùng giống với họ đã thích.
 
 \subsection{Hàm dự đoán của ``Matrix factorization''}
@@ -16,7 +17,7 @@ Phương pháp ``Matrix factorization'' sẽ phân tích ma trận tương tác 
 \begin{figure}[h]
     \centering
     \includegraphics[width = \textwidth]{images/Chapter2/MF1.jpg}
-    \caption{Matrix Factorization. Ma trận tương tác $Y$ sẽ được phân rã thành ma trận đại diện cho người dùng $V$ và đại diện cho sản phẩm $W$}
+    \caption{Matrix Factorization. Ma trận tương tác $Y$ sẽ được phân rã thành ma trận đại diện cho người dùng $V$ và đại diện cho sản phẩm $W$.}
     \label{fig:chap2_MF1}
 \end{figure}
 Trong đó:
@@ -54,14 +55,14 @@ Mục tiêu chính của việc huấn luyện mô hình ``Matrix Factorization'
 Để cực tiểu hóa hàm mục tiêu này, ta có thể sử dụng thuật toán ``Gradient Descent'' sẽ được trình bày ở phần \ref{section:Gradientdescent}.
 
 \section{``Logistic regression''}
-``Logistic regression'' là một mô hình học có giám sát và được sử dụng trong bài toán phân lớp nhị phân. Mô hình này hoạt động bằng cách sử dụng hàm ``sigmoid'' để phân lớp các véc-tơ đầu vào. Trong khóa luận của nhóm chúng em, ``Logistic regression'' được sử dụng để ước lượng ma trận xu hướng (tiền đề cho việc tính toán độ đo IPS) thông qua các thuộc tính đặc trưng của người dùng và sản phẩm.
+``Logistic regression'' là một mô hình học có giám sát và được sử dụng trong bài toán phân lớp nhị phân. Mô hình này hoạt động bằng cách sử dụng hàm ``sigmoid'' để phân lớp các véc-tơ đầu vào. Trong khóa luận của nhóm chúng em, ``Logistic regression'' được sử dụng để ước lượng propensity (tiền đề cho việc tính toán độ đo IPS) thông qua các thuộc tính đặc trưng của người dùng và sản phẩm.
 
 \subsection{Hàm ``sigmoid''}
 Hàm ``sigmoid'' là một hàm số liên tục có đạo hàm không âm tại mọi điểm. Hàm ``sigmoid'' sẽ ánh xạ tất cả số thực vào khoảng (0,1), điều này làm cho nó trở thành một hàm phù hợp cho bài toán phân lớp. Hình \ref{fig:2.2_sigmoid} minh họa đồ thị hàm số ``sigmoid''. Thông qua đồ thị ta có thể thấy khi đầu vào càng tiến đến $+\infty$ giá trị khi đi qua hàm ``sigmoid'' càng tiến gần 1, ngược lại, khi đầu vào càng tiến đến $-\infty$ giá trị khi đi qua hàm ``sigmoid'' càng tiến gần về 0.
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth, height=5cm]{images/Chapter2/sigmoid.png}
-    \caption{Đồ thị hàm số số ``Sigmoid'' (hình vẽ được lấy từ bài giảng của GS. Andrew Ng trong khóa học "Machine Learning" ở trang \href{https://www.coursera.org/learn/machine-learning}{coursera.org})}
+    \caption{Đồ thị hàm số số ``Sigmoid'' (hình vẽ được lấy từ bài giảng của GS. Andrew Ng trong khóa học "Machine Learning" ở trang \href{https://www.coursera.org/learn/machine-learning}{coursera.org}).}
     \label{fig:2.2_sigmoid}
 \end{figure}
 
@@ -127,7 +128,7 @@ Như vậy, ta sẽ tìm các tham số $W$ của hàm dự đoán của ``Logis
 
 Để cực tiểu hàm này, ta có thể sử dụng thuật toán ``Gradient Descent'' (sẽ được trình bày ở các phần sau).
 \section{``Naive bayes''}
-``Naive bayes'' là một mô hình học có giám sát và thường được sử dụng trong bài toán phân lớp. Mô hình này hoạt động bằng cách sử dụng định lý ``Bayes'' để phân lớp các véc-tơ đầu vào, tuân theo một giả định là các biến đầu vào độc lập với nhau. Trong khóa luận của nhóm chúng em, ``Naive bayes'' được sử dụng để ước lượng ma trận xu hướng bằng cách sử dụng ma trận tương tác và một phần nhỏ dữ liệu kiểm tra tuân theo phân phối đều.
+``Naive bayes'' là một mô hình học có giám sát và thường được sử dụng trong bài toán phân lớp. Mô hình này hoạt động bằng cách sử dụng định lý ``Bayes'' để phân lớp các véc-tơ đầu vào, tuân theo một giả định là các biến đầu vào độc lập với nhau. Trong khóa luận của nhóm chúng em, ``Naive bayes'' được sử dụng để ước lượng propensity bằng cách sử dụng ma trận tương tác và một phần nhỏ dữ liệu kiểm tra tuân theo phân phối đều.
 \subsection{Định lý ``Bayes''}
 Định lý ``Bayes'' là một định lý về xác suất có điều kiện. Nó được sử dụng để tính toán xác suất một biến cố $A$ xảy ra khi biết biến cố $B$ xảy ra, được tính toán thông qua công thức sau:
 \begin{equation}

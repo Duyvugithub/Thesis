@@ -37,6 +37,7 @@ Trong phạm vi đề tài của khóa luận nhóm chúng em sẽ tiến hành 
 
 
 \section{Thách thức của bài toán}
+\label{section:thachthuc}
 Để huấn luyện được mô hình có thể đề xuất chính xác tất cả các sản phẩm cho người dùng, ta cần một bộ dữ liệu đầy đủ bao gồm đánh giá của tất cả người dùng cho tất cả sản phẩm. Tuy nhiên dữ liệu này không thể có được trong thực tế, do người dùng không thể nào xem và đánh giá tất cả các sản phẩm trong hệ thống. Vì vậy để mô hình có thể huấn luyện được tốt nhất ta cần bộ dữ liệu quan sát được phải được phát sinh từ phân phối đều của bộ dữ liệu đầy đủ này, vì bộ dữ liệu quan sát được này sẽ đại diện cho bộ dữ liệu đầy đủ và nó được gọi là dữ liệu không bị thiên lệch. 
 
 Dữ liệu quan sát được trong bài toán đề xuất sản phẩm thường bị gặp vấn đề lớn về thiên lệch dữ liệu. Thiên lệch dữ liệu là dữ liệu quan sát được không được phát sinh từ phân phối đều, do đó nó không đại diện được cho bộ dữ liệu đầy đủ. Bắt nguồn từ 2 nguyên nhân chính trong việc thu thập dữ liệu sau:
@@ -109,7 +110,7 @@ Khi đánh giá cách dự đoán nào là tốt trên tập dữ liệu quan s�
 
 Để khắc phục vấn đề thiên lệch dữ liệu tác giả Tobias Schnabel và các cộng sự \cite{IPS} trong bài báo ``Recommendations as Treatments: Debiasing Learning and Evaluation'' tại hội nghị ``ICML 2016'', đã đề xuất việc áp dụng phương pháp ``Inverse propensity scoring'' (IPS) vào quá trình huấn luyện và đánh giá mô hình. IPS hoạt động bằng cách đánh lại trọng số của các mẫu dựa trên điểm số xu hướng, theo cách giảm trọng số của các mẫu thường quan sát được, trong khi tăng trọng số của các mẫu hiếm gặp. Điều này sẽ giúp kiểm soát được vấn đề thiên lệch của dữ liệu.
 
-\section{Tổng quan}
+\section{Bố cục}
 Phần còn lại của khóa luận sẽ được trình bày như sau:
 \begin{itemize}
     \item Chương 2 trình bày kiến thức nền tảng về ``Matrix factorization'', ``Gradient descent'', ``Naive bayes'' và ``Logistic regression''.

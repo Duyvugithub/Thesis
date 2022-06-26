@@ -7,48 +7,51 @@
 ``Matrix factorization'' là một phương pháp thuộc nhóm lọc cộng tác (collaborative filtering), một nhóm các phương pháp tập trung vào mối quan hệ giữa các người dùng, dựa trên đánh giá của các người dùng trước đó trong hệ thống. Các phương pháp lọc cộng tác này sẽ dựa trên ý tưởng những người dùng có cùng sở thích đối với một số sản phẩm nhất định, thì cũng có cùng sở thích đối với sản phẩm khác; do đó nó sẽ đề xuất sản phẩm cho người dùng dựa trên các sản phẩm mà người dùng giống với họ đã thích.
 
 \subsection{Hàm dự đoán của ``Matrix factorization''}
-Phương pháp ``Matrix factorization'' sẽ phân tích ma trận tương tác của người dùng và sản phẩm $R$ thành tích của hai ma trận $P$ và $Q$, sao cho từ hai ma trận $P$ và $Q$ này ta có thể xây dựng lại được ma trận $R$ càng chính xác càng tốt (hình \ref{fig:chap2_MF1} minh họa cách ước lượng ma trận tương tác). Một cách cụ thể, ma trận tương tác dự đoán được của ta có thể ước lượng như sau:
+Phương pháp ``Matrix factorization'' sẽ phân tích ma trận tương tác của người dùng và sản phẩm $Y$ thành tích của hai ma trận $V$ và $W$, sao cho từ hai ma trận $V$ và $W$ này ta có thể xây dựng lại được ma trận $Y$ càng chính xác càng tốt. Một cách cụ thể, ma trận tương tác dự đoán được của ta có thể ước lượng như sau (hình \ref{fig:chap2_MF1} minh họa phương pháp ``Matrix factorization''):
 \begin{equation}
 \label{eq:2.1_MF}
-    R \approx \hat{R} = P \times Q^T
+    Y \approx \hat{Y} = V \times W^T
 \end{equation}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = \textwidth]{images/Chapter2/MF1.png}
-    \caption{Matrix Factorization. Ma trận tương tác $R$ sẽ được phân rã thành ma trận đại diện cho người dùng $P$ và đại diện cho sản phẩm $Q$}
+    \includegraphics[width = \textwidth]{images/Chapter2/MF1.jpg}
+    \caption{Matrix Factorization. Ma trận tương tác $Y$ sẽ được phân rã thành ma trận đại diện cho người dùng $V$ và đại diện cho sản phẩm $W$}
     \label{fig:chap2_MF1}
 \end{figure}
 Trong đó:
 \begin{itemize}
-    \item Ma trận tương tác $R$ là ma trận thưa có kích thước là $m \times n$ tương ứng với m người dùng đánh giá cho n sản phẩm. Ma trận $\hat{R}$ là ma trận dự đoán có cùng kích thước với $R$.
-    \item Ma trận đại diện cho người dùng $P$ là ma trận có kích thước $m \times k$, người dùng thứ $u$ sẽ tương ứng với hàng thứ $u$ trong ma trận và sẽ được kí hiệu là $p_u$. 
-    \item Tương tự, Ma trận đại diện cho người dùng $Q$ là ma trận có kích thước $k \times n$, sản phẩm thứ $i$ sẽ tương ứng với hàng thứ $i$ trong ma trận và sẽ được kí hiệu là $q_i$.
-    \item $k$ là hyperparameter được điều chỉnh trong quá trình huấn luyện mô hình, đại diện cho số lượng các đặc trưng tiềm ẩn. Các đặc trưng tiềm ẩn mô tả sự liên quan giữa các người dùng và các sản phẩm. Ví dụ như trong hệ thống đề xuất phim, các đặc trưng tiềm ẩn có thể là thể loại, ngôn ngữ, diễn viên hay bất kì các đặc trưng nào khác; hoặc có thể là bất cứ sự liên quan khác giữa người dùng và sản phẩm mà ta không cần đặt tên cụ thể.
+    \item Ma trận tương tác $Y$ là ma trận thưa có kích thước là $m \times n$ tương ứng với m người dùng đánh giá cho n sản phẩm. Ma trận $\hat{Y}$ là ma trận dự đoán có cùng kích thước với $Y$.
+    \item $d$ là hyperparameter được điều chỉnh trong quá trình huấn luyện mô hình, đại diện cho số lượng các đặc trưng tiềm ẩn. Các đặc trưng tiềm ẩn mô tả sự liên quan giữa các người dùng và các sản phẩm. Ví dụ như trong hệ thống đề xuất phim, các đặc trưng tiềm ẩn có thể là thể loại, ngôn ngữ, diễn viên hay bất kì các đặc trưng nào khác; hoặc có thể là bất cứ sự liên quan khác giữa người dùng và sản phẩm mà ta không cần đặt tên cụ thể.
+    \item Ma trận $V$ có kích thước $m \times d$ và là ma trận đại diện cho người dùng. Trong ma trận này, người dùng thứ $u$ sẽ tương ứng với hàng thứ $u$ trong ma trận và sẽ được kí hiệu là $v_u$. Các hệ số trong véc-tơ $v_u$ sẽ đo lường mức độ yêu thích của người dùng $u$ cho các đặc trưng ẩn, hệ số càng cao tương ứng với người dùng $u$ càng thích các sản phẩm mang đặc trưng đó.
+ 
+    \item Tương tự, ma trận $W$ có kích thước $d \times n$ và là ma trận đại diện cho sản phẩm. Trong ma trận này, sản phẩm thứ $i$ sẽ tương ứng với hàng thứ $i$ trong ma trận và sẽ được kí hiệu là $w_i$. Các hệ số trong véc-tơ $w_i$ sẽ đo lường mức độ sản phẩm $i$ mang các đặc trưng ẩn, hệ số càng cao tương ứng với sản phẩm $i$ mang đặc trưng đó càng lớn.
 \end{itemize}
-Với mỗi sản phẩm $i$ trong ma trận $Q$, các hệ số trong véc-tơ $q_i$ sẽ đo lường mức độ sản phẩm $i$ mang các đặc trưng ẩn, hệ số càng cao tương ứng với sản phẩm $i$ mang đặc trưng đó càng lớn. Tương tự, với mỗi người dùng $u$ trong ma trận $P$, các hệ số trong véc-tơ $p_u$ sẽ đo lường mức độ yêu thích của người dùng $u$ cho các đặc trưng ẩn, hệ số càng cao tương ứng với người dùng $u$ càng thích các sản phẩm mang đặc trưng đó.
-Vì vậy, ta cần đề xuất cho người dùng $u$ các sản phẩm $i$ mang đặc trưng mà người dùng $u$ thích, tương ứng với giá trị của $p_u$ và $q_i$ đều cao dẫn đến giá trị của 
-$p_u\times q_{i}^T$ càng cao.
-
-Trong thực tế, một số người dùng sẽ có thiên hướng đánh giá cao hơn các người dùng khác, hay một số sản phẩm sẽ bị đánh giá thấp hơn trung bình. Do đó đánh giá của người dùng $u$ cho sản phẩm $i$ sẽ được tính toán bằng tích của hai véc-tơ $p_u$ và $q_i$ cộng thêm các offset cho riêng từng người dùng $b_u$ từng sản phẩm $b_i$ và giá trị trung bình cho toàn bộ đánh giá $\mu$ theo công thức sau:
+Mục tiêu của chúng ta là đề xuất cho người dùng $u$ các sản phẩm $i$ mang đặc trưng mà người dùng $u$ thích, tương ứng với giá trị của $v_u$ và $w_i$ đều cao dẫn đến giá trị của $v_u^T\times w_{i}$ càng cao. Khi đó, đánh giá của người dùng $u$ cho sản phẩm $i$ sẽ được tính toán bằng tích của 2 véc-tơ $v_u$ và $w_i$. Cụ thể như công thức sau:
 \begin{equation}
-\label{eq:2.1_R_ui}
-    \hat{R_{u,i}} = p_u\times q_{i}^T + b_u + b_i + \mu
+\label{eq:2.1_yui_nonbias}
+    \hat{Y}_{u,i} = v_{u} \times w_i^T
+\end{equation}
+
+Trong thực tế, một số người dùng sẽ có thiên hướng đánh giá cao hơn các người dùng khác, hay một số sản phẩm sẽ bị đánh giá thấp hơn trung bình. Do đó đánh giá của người dùng $u$ cho sản phẩm $i$ cần cộng thêm các offset cho riêng từng người dùng $a_u$ từng sản phẩm $b_i$ và giá trị trung bình cho toàn bộ đánh giá $c$. Khi đó công thức \ref{eq:2.1_yui_nonbias} được viết lại như sau:
+\begin{equation}
+\label{eq:2.1_yui_bias}
+    \hat{Y}_{u,i} = v_{u}\times w_i^{T} + a_u + b_i + c
 \end{equation}
 \subsection{Tìm các tham số của hàm dự đoán của ``Matrix Factorization''}
-Mục tiêu chính của việc huấn luyện mô hình ``Matrix Factorization'' là tìm giá trị của hai ma trận $P$ và $Q$. Vì vậy hai ma trận này sẽ được ước lượng bằng cách cực tiểu hóa trung bình bình phương sai số giữa đánh giá dự đoán và đánh giá thực trên các đánh giá quan sát được. Hàm mục tiêu được định nghĩa cụ thể như sau:
+Mục tiêu chính của việc huấn luyện mô hình ``Matrix Factorization'' là tìm giá trị của hai ma trận $V$ và $W$. Vì vậy hai ma trận này sẽ được ước lượng bằng cách cực tiểu hóa trung bình bình phương sai số giữa đánh giá dự đoán và đánh giá thực trên các đánh giá quan sát được. Với $A$ là ma trận chứa các offset, hàm mục tiêu được định nghĩa cụ thể như sau:
 \begin{equation}
 \label{eq:2.1_objective}
-    C(W) = \operatorname*{argmin}_{P,Q,b} \sum_{(u,i)\in\kappa} (R_{u,i} - \hat{R_{u,i}})^2 + \lambda(||P||_{F}^2 + ||Q||_{F}^2 + b_{u}^2 + b_{i}^2)
+    \operatorname*{argmin}_{V,W,A} \sum_{(u,i)\in\kappa} (Y_{u,i} - \hat{Y}_{u,i})^2 + \lambda(||V||_{F}^2 + ||W||_{F}^2+A)
 \end{equation}
 Ở đây: 
 \begin{itemize}
     \item $\kappa$ là tập dữ liệu chứa các đánh giá quan sát được.
-    \item $\lambda$ là tham số regularization $(0 \leq \lambda \leq 1)$ và $\lambda(||p_u||^2 + ||q_i||^2 + b_{u}^2 + b_{i}^2)$ là regularization để tránh hiện tượng overfitting của mô hình.
-    \item $||\cdot||_{F}$ là ký hiệu của chuẩn Frobenius, được tính toán là căn bậc hai của tổng bình phương tất cả các phần tử của ma trận.
+    \item $\lambda$ là tham số regularization $(0 \leq \lambda \leq 1)$ và $\lambda(||V||_{F}^2 + ||W||_{F}^2)$ là regularization để tránh hiện tượng overfitting của mô hình.
+    \item $||\cdot||_{F}$ là ký hiệu của chuẩn Frobenius, bằng căn bậc hai của tổng bình phương tất cả các phần tử của ma trận.
 \end{itemize}
 
-Để cực tiểu hóa hàm mục tiêu này, ta có thể sử dụng thuật toán ``Gradient Descent'' (sẽ được trình bày ở dưới).
+Để cực tiểu hóa hàm mục tiêu này, ta có thể sử dụng thuật toán ``Gradient Descent'' sẽ được trình bày ở phần \ref{section:Gradientdescent}.
 
 \section{``Logistic regression''}
 ``Logistic regression'' là một mô hình học có giám sát và được sử dụng trong bài toán phân lớp nhị phân. Mô hình này hoạt động bằng cách sử dụng hàm ``sigmoid'' để phân lớp các véc-tơ đầu vào. Trong khóa luận của nhóm chúng em, ``Logistic regression'' được sử dụng để ước lượng ma trận xu hướng (tiền đề cho việc tính toán độ đo IPS) thông qua các thuộc tính đặc trưng của người dùng và sản phẩm.
@@ -57,7 +60,7 @@ Mục tiêu chính của việc huấn luyện mô hình ``Matrix Factorization'
 Hàm ``sigmoid'' là một hàm số liên tục có đạo hàm không âm tại mọi điểm. Hàm ``sigmoid'' sẽ ánh xạ tất cả số thực vào khoảng (0,1), điều này làm cho nó trở thành một hàm phù hợp cho bài toán phân lớp. Hình \ref{fig:2.2_sigmoid} minh họa đồ thị hàm số ``sigmoid''. Thông qua đồ thị ta có thể thấy khi đầu vào càng tiến đến $+\infty$ giá trị khi đi qua hàm ``sigmoid'' càng tiến gần 1, ngược lại, khi đầu vào càng tiến đến $-\infty$ giá trị khi đi qua hàm ``sigmoid'' càng tiến gần về 0.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth, height=7cm]{images/Chapter2/sigmoid.png}
+    \includegraphics[width=\textwidth, height=5cm]{images/Chapter2/sigmoid.png}
     \caption{Đồ thị hàm số số ``Sigmoid'' (hình vẽ được lấy từ bài giảng của GS. Andrew Ng trong khóa học "Machine Learning" ở trang \href{https://www.coursera.org/learn/machine-learning}{coursera.org})}
     \label{fig:2.2_sigmoid}
 \end{figure}
@@ -194,6 +197,7 @@ công thức sau:
 \end{equation}
 
 \section{``Gradient descent''}
+\label{section:Gradientdescent}
 ``Gradient descent'' là một thuật toán dùng để ước lượng các tham số trong hàm chi phí, nhằm mục đích tìm ra các tham số mà tại đó hàm chi phí đạt giá trị nhỏ nhất (hay nói cách khác là tìm điểm cực tiểu của hàm chi phí). Trong phạm vi khóa luận, thuật toán ``Gradient descent'' được sử dụng để tối ưu hàm chi phí của 2 mô hình ``Matrix factorization'' và ``Logistic regression''.
 \subsection{Ý tưởng chính}
 Thông thường khi tìm kiếm điểm cực tiểu của một hàm số $f(x)$ nào đó ta sẽ tìm đạo hàm của hàm số đó $f^{'}(x)$ và điểm cực tiểu của hàm số sẽ là điểm có đạo hàm bằng 0. Đường tiếp tuyến của một điểm trong đồ thị của hàm số đó sẽ có hệ số góc bằng với đạo hàm của điểm đó, hệ số góc của đường tiếp tuyến tại điểm cực tiểu sẽ có giá trị bằng 0.

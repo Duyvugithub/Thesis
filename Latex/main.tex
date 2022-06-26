@@ -10,6 +10,7 @@
 
 % package tự thêm
 \usepackage{amsmath}
+\usepackage{pdfpages}
 
 % Font tiếng Việt
 \usepackage[T5]{fontenc}
@@ -68,9 +69,10 @@
 \makeatletter
 \def\BState{\State\hskip-\ALG@thistlm}
 \makeatother
-\newtheorem{theorem}{Theorem}[section]
+\newtheorem{theorem}{Định lý}[section]
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}[theorem]{Bổ đề}
+
 
 % Bảng biểu
 \usepackage{multirow}
@@ -88,6 +90,14 @@
 \renewcommand{\listtablename}{Danh sách bảng}
 \renewcommand{\appendixname}{Phụ lục}
 
+
+% Kích thước Chapter
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\LARGE\bfseries}
+  {\chaptertitlename\ \thechapter}{18pt}{\huge}
+  
+  
 % Dãn dòng 1.5
 \usepackage{setspace}
 \onehalfspacing
@@ -117,7 +127,7 @@
 % ========================================================================================= %
 \newcommand{\tenSV}{Nguyễn~Duy~Vũ~-~Nguyễn~Chiêu~Bản} % Dấu ~ là khoảng trắng không được tách (các chữ nối với nhau bằng dấu ~ sẽ nằm cùng 1 dòng
 \newcommand{\mssv}{18120264~-~18120283}
-\newcommand{\tenKL}{Sử~dụng~LaTeX trong Khoá~luận~tốt~nghiệp} % Chú ý dấu ~ trong tên khóa luận
+\newcommand{\tenKL}{Giải~quyết~vấn~đề~dữ~liệu~bị~thiên~lệch~trong~bài~toán~đề~xuất~sản~phẩm~bằng~mô~hình~học~dựa~trên~độ~đo~IPS. (Solving~the~problem~of~biased~data~in~recommender~system~by~IPS-based~learning~model)} % Chú ý dấu ~ trong tên khóa luận
 \newcommand{\tenGVHD}{Th.S.~Trần~Trung~Kiên~-~TS.~Nguyễn~Ngọc~Thảo}
 \newcommand{\tenBM}{Khoa học máy tính}
 
@@ -131,11 +141,18 @@
 %\addcontentsline{toc}{chapter}{Lời cam đoan}
 %\include{Appendix/reassurances}
 
+\addcontentsline{toc}{chapter}{Nhận xét của GV hướng dẫn}
+\include{Appendix/advisor}
+
+\addcontentsline{toc}{chapter}{Nhận xét của GV phản biện}
+\include{Appendix/reviewer}
+
+
 \addcontentsline{toc}{chapter}{Lời cảm ơn}
 \include{Appendix/thanks}
 
-\addcontentsline{toc}{chapter}{Đề cương chi tiết}
-\include{Appendix/decuong}
+\addcontentsline{toc}{chapter}{Đề cương}
+\include{Appendix/proposal}
 
 % Mục lục, danh sách hình, danh sách bảng
 \addcontentsline{toc}{chapter}{Mục lục}
@@ -144,7 +161,7 @@
 \listoftables
 
 \addcontentsline{toc}{chapter}{Tóm tắt}
-\include{Appendix/tomtat}
+\include{Appendix/summary}
 
 \clearpage
 
@@ -175,13 +192,13 @@
 \DeclareNameAlias{sortname}{last-first}
 \DeclareNameAlias{default}{last-first}
 
-\printbibliography[heading=subbibliography, title={Tiếng Anh}, notkeyword=Viet, resetnumbers=3] 
+\printbibliography[heading=subbibliography, title={Tiếng Anh}, notkeyword=Viet, resetnumbers=6] 
 % ===================================================================== %
 % CHÚ Ý: phải gán lại resetnumbers=số tài liệu tham khảo tiếng Việt + 1 %
 % ===================================================================== %
 
 % Phần phụ lục
-%\include{Appendix/appendix1}
-%\include{Appendix/appendix2}
+% \include{Appendix/appendix1}
+% \include{Appendix/appendix2}
 
 \end{document} 

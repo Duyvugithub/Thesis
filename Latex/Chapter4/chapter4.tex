@@ -24,19 +24,20 @@ Trong tất cả các thí nghiệm, nhóm chúng em sẽ tiến hành lựa ch�
 Đầu tiên, nhóm em tiến hành thử nghiệm để xem hiệu quả của phương pháp học MF-IPS so với phương pháp MF thông thường trên hai bộ dữ liệu thế thới thực là Coat và Yahoo!R3. Trên bộ dữ liệu Coat, nhóm em sử dụng phương pháp ``Logistic Regression'' để ước lượng ma trận propensity như đã trình bày ở phần \ref{sec:3_estimate_LR}, trên bộ dữ Yahoo!R3, nhóm em sử dụng phương pháp ``Naive Bayes'' để ước lượng ma trận propensity như đã trình bày ở phần \ref{sec:3_estimate_NB}. Kết quả được hiển thị trong bảng \ref{table:4_implement}
 
 \begin{table}[h]
-\centering
-\begin{tabular}{|l|rr|rr|}
-\hline
-      & \multicolumn{2}{c|}{Coat}                                      & \multicolumn{2}{c|}{Yahoo}                                     \\ \hline
-      & \multicolumn{1}{l|}{MAE}            & \multicolumn{1}{l|}{MSE} & \multicolumn{1}{l|}{MAE}            & \multicolumn{1}{l|}{MSE} \\ \hline
-MF & \multicolumn{1}{r|}{0.916}          & 1.205                    & \multicolumn{1}{r|}{1.183}          & 1.899                    \\ \hline
-MF-IPS   & \multicolumn{1}{r|}{\textbf{0.904}} & \textbf{1.197}           & \multicolumn{1}{r|}{\textbf{0.796}} & \textbf{0.976}           \\ \hline
-\end{tabular}
-\caption{Độ lỗi trên tập test của hai mô hình MF và MF-IPS khi học với hai bộ dữ liệu Coat và Yahoo!R3.}
-\label{table:4_implement}
+    \centering
+    \begin{tabular}{|l|rr|rr|}
+    \hline
+          & \multicolumn{2}{c|}{Yahoo}                                      & \multicolumn{2}{c|}{Coat}                                     \\ \hline
+          & \multicolumn{1}{l|}{MAE}            & \multicolumn{1}{l|}{MSE} & \multicolumn{1}{l|}{MAE}            & \multicolumn{1}{l|}{MSE} 
+        \\ \hline
+    MF-IPS   & \multicolumn{1}{r|}{\textbf{0.796}} & \textbf{ 0.976}           & \multicolumn{1}{r|}{\textbf{0.904}} & \textbf{1.197}           
+        \\ \hline
+    MF & \multicolumn{1}{r|}{1.183}          &  1.899                    & \multicolumn{1}{r|}{0.916}          & 1.205  
+        \\ \hline
+    \end{tabular}
+    \caption{Độ lỗi trên tập test của hai mô hình MF và MF-IPS khi học với hai bộ dữ liệu Coat và Yahoo!R3.}
+    \label{table:4_implement}
 \end{table}
-
-So với kết quả bài báo được thể hiện trong hình \ref{fig:4_result}:
 
 \begin{figure}[h]
     \centering
@@ -45,42 +46,56 @@ So với kết quả bài báo được thể hiện trong hình \ref{fig:4_resu
     \label{fig:4_result}
 \end{figure}
 
-Thử nghiệm của nhóm em và kết quả của bài báo đểu có cùng kết luận là phương pháp MF-IPS sẽ có kết quả trên tập test tốt hơn so với phương pháp MF thông thường, ngoài ra việc sử dụng phương pháp ước lượng mà trận propensity bằng ``Naive Bayes'' có vẻ cho kết quả của việc học tốt hơn so với phương pháp ước lượng mà trận propensity bằng ``Logistic Regression'', điều này sẽ được làm rõ hơn ở các thí nghiệm sau của nhóm em.
+
+
+So với kết quả bài báo được thể hiện trong hình \ref{fig:4_result}. Thử nghiệm của nhóm em và kết quả của bài báo đều có cùng kết luận là phương pháp MF-IPS sẽ có kết quả trên tập test tốt hơn so với phương pháp MF thông thường, ngoài ra phương pháp MF-IPS sử dụng trên bộ dữ liệu Yahoo!R3 cải thiện được độ lỗi nhiều hơn so với phương pháp MF-IPS được sử dụng trên bộ dữ liệu Coat. Điều này có thể do bộ dữ liệu Yahoo!R3 bị lệch nhiều hơn bộ dữ liệu Coat hoặc cũng có thể do phương pháp ước lượng ma trận propensity bằng ''Naive Bayes'' sử dụng một phần thông tin được tiết lộ từ tập test nên kết quả thu được tốt hơn so với phương pháp ''Logistic Regression''. 
+
+Tiếp theo, nhóm em sẽ tiến hành các thí nghiệm để làm rõ những vấn đề trên.
 
 \section{Ảnh hưởng của việc dữ liệu bị thiên lệch tới việc học của MF và MF-IPS}
 \subsection{Mức độ cải thiện của MF-IPS với MF khi học trên tập COAT với tập YAHOO}
-
-Ta biết rằng bộ dữ liệu Coat và bộ dữ liệu Yahoo!R3 là những tập dữ liệu với tập kiểm tra là MCAR trong khi tập huấn luyện của chúng bị lệch. Nhóm em có tiến hành so sánh độ lệch của tập huấn luyện với tập dữ liệu kiểm tra trên hai bộ dữ liệu bằng độ đo KL - div hay còn gọi là độ đo ``Kullback-Leibler divergence'' tương tự như \cite{saito2020asymmetric}, giá trị của độ đo này càng lớn chứng tỏ tập huấn luyện và tập kiểm tra càng có phân phối khác biệt nhau. Kết quả thu được như sau:
+\subsubsection{Mức độ thiên lệch của tập dữ liệu Coat và tập dữ liệu Yahoo}
+Ta biết rằng bộ dữ liệu Coat và bộ dữ liệu Yahoo!R3 là những tập dữ liệu với tập test là MCAR trong khi tập training của chúng bị lệch. Nhóm em có tiến hành so sánh độ lệch của tập training với tập test trên hai bộ dữ liệu bằng độ đo KL - div hay còn gọi là độ đo ``Kullback-Leibler divergence'' tương tự như \cite{saito2020asymmetric}, giá trị của độ đo này càng lớn chứng tỏ tập training và tập test càng có phân phối khác biệt nhau. Cụ thể, các kết quả nhóm chúng em thu được như sau: 
 \begin{itemize}
-    \item Đối tập dữ liệu Coat, giá trị của độ đo KL - div là 0.049, phân phối của nó được thể hiện trong hình \ref{fig:4_1_coat}
-    \item Đối tập dữ liệu Yahoo, giá trị của độ đo KL - div là 0.469, phân phối của nó được thể hiện trong hình \ref{fig:4_2_yahoo}
+    \item Đối với tập dữ liệu Coat, giá trị của độ đo KL - div là 0.049, phân phối của nó được thể hiện trong hình \ref{fig:4_1_coat}.
+    \item Đối với tập dữ liệu Yahoo, giá trị của độ đo KL - div là 0.469, phân phối của nó được thể hiện trong hình \ref{fig:4_2_yahoo}.
 \end{itemize}
-Qua đó ta có thể thấy rằng tập dữ liệu Yahoo!R3 lệch hơn tương đối so với tập dữ liệu Coat. Do đó, để biết được hiệu quả của phương pháp MF-IPS so với với phương pháp MF thông thường, nhóm em tiến hành thí nghiệm phương pháp MF-IPS và MF truyền thống trên cả hai bộ dữ liệu trên, để công bằng nhóm em sẽ sử dụng cùng một phương pháp ước lượng ma trận propensity đó là ``Naive Bayes'' vì bộ dữ liệu Yahoo!R3 không có thông tin về người dùng, sản phẩm để thực hiện phương pháp ``Logistic Regression''  
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\textwidth]{images/Chapter4/Diff_coat.png}
-    \caption{So sánh phân phối xác suất các đánh giá trên tập huấn luyện bị lệch với tập kiểm tra không bị lệch của bộ dữ liệu Coat}
-    \label{fig:4_1_coat}
-\end{figure}
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{images/Chapter4/Diff_yahoo.png}
-    \caption{So sánh phân phối xác suất các đánh giá trên tập huấn luyện bị lệch với tập kiểm tra không bị lệch của bộ dữ liệu Yahoo!R3}
+    \caption{Phân phối dữ liệu của tập training và tập test trên bộ dữ liệu Yahoo.}
     \label{fig:4_2_yahoo}
 \end{figure}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{images/Chapter4/Diff_coat.png}
+    \caption{Phân phối dữ liệu của tập training và tập test trên bộ dữ liệu Coat.}
+    \label{fig:4_1_coat}
+\end{figure}
+Qua hình \ref{fig:4_2_yahoo}, hình \ref{fig:4_1_coat} và kết quả của độ đo KL - div ta có thể thấy chênh lệch về phân phối dữ liệu trong tập training và tập test của tập Yahoo lớn hơn tập Coat rất nhiều. Điều này có nghĩa là mức độ thiên lệch trong tập dữ liệu Yahoo cao hơn tập dữ liệu Coat nhiều, làm cho độ hiệu quả của phương pháp MF-IPS khi so với phương pháp MF sẽ được thể hiện nổi bật hơn ở trong tập Yahoo. Trong thí nghiệm tiếp theo nhóm em sẽ cho thấy rõ vấn đề này.
+\subsubsection{Cách tiến hành}
+Để biết được hiệu quả của phương pháp MF-IPS so với với phương pháp MF thông thường, nhóm em tiến hành thí nghiệm phương pháp MF-IPS và MF truyền thống trên cả hai bộ dữ liệu Coat và Yahoo. Để công bằng nhóm em sẽ sử dụng cùng một phương pháp ước lượng ma trận propensity đó là ``Naive bayes'' vì bộ dữ liệu Yahoo!R3 không có thông tin về người dùng - sản phẩm để thực hiện phương pháp ``Logistic regression''. Sau đó hai mô hình sẽ đánh giá độ lỗi MSE trên 95\% dữ liệu tập test và 5\% dữ liệu tập test còn lại sẽ được sử dụng để ước lượng propensity thông qua phương pháp ``Naive bayes''.
+\subsubsection{Kết quả}
+Bảng \ref{table:yahoo_coat_NB} cho thấy kết quả thí nghiệm của nhóm chúng em về độ lỗi MSE của 2 phương pháp MF và MF-IPS (với propensity được ước lượng thông qua ``Naive bayes'') trên 2 tập dữ liệu Yahoo và Coat.
 
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ccc}
+    \hline
+     & Yahoo & Coat \\ \hline
+    MF-IPS & 0.976 & 1.080 \\
+    MF & 1.899 & 1.197
+    \end{tabular}
+    \caption{Độ lỗi MSE của phương pháp MF và MF-IPS trên 2 tập dữ liệu Coat và Yahoo. Trong đó IPS được ước lượng thông qua ``Naive bayes''.}
+    \label{table:yahoo_coat_NB}
+\end{table}
 
-
-
-
-
-
+Có thể thấy độ lỗi của phương pháp MF-IPS thấp hơn độ lỗi của phương pháp MF trên cả 2 tập dữ liệu Coat và Yahoo. Đặc biệt, tập dữ liệu Yahoo có mức độ thiên lệch dữ liệu nhiều hơn làm cho mức độ cải thiện của MF-IPS so với MF lớn hơn nhiều khi so sánh với mức độ cải thiện trên tập Coat.
 
 \subsection{Mức độ cải thiện của MF-IPS với MF khi học trên tập MovieLens giả lập với mức độ thiên lệch của dữ liệu giảm dần}
-\subsubsection{Tập MovieLens giả lập}
+\subsubsection{Tập MovieLens 100k giả lập}
 \label{subsubsection:MovieLens}
 Như đã trình bày ở phần trước, ở thí nghiệm này nhóm chúng em sẽ tiến hành thí nghiệm trên tập dữ liệu MovieLens 100k. Vì thí nghiệm này yêu cầu kiểm soát được mức độ thiên lệch của dữ liệu, nên nhóm chúng em sẽ tiến hành tạo một tập dữ liệu MovieLens~100k giả lập. 
 
@@ -89,32 +104,36 @@ Tập dữ liệu MovieLens~100k giả lập sẽ được tạo bằng cách s�
 Ngoài ra, dữ liệu quan sát được sẽ được ước lượng như sau: Với các đánh giá 4 và 5, propensity để quan sát được các đánh giá này $k$. Đối với các đánh giá < 4, propensity để quan sát được các đánh giá này là $k\alpha^{4-r}$, với $r$ là các đánh giá và $\alpha \in [0,1]$ là tham số điều chỉnh mức độ thiên lệch dữ liệu. Với mỗi $\alpha$. $k$ được đặt sao cho số lượng dữ liệu quan sát được chỉ chiếm 5\% trên toàn bộ ma trận. Bằng cách thay đổi giá trị $\alpha$, chúng ta có thể thay đổi được mức độ thiên lệch dữ liệu. Khi $\alpha = 1$ dữ liệu sẽ được phát sinh hoàn toàn ngẫu nhiên theo phân phối đều (vì khi đó propensity của toàn bộ đánh giá đều bằng $k$). Khi $\alpha \rightarrow 0$ thì dữ liệu quan sát được chỉ chứa các giá trị 4 và 5 (vì khi đó propensity của các đánh giá 1,2 và 3 bằng 0). Lưu ý là với $\alpha = 0.25$ thì phân bố của dữ liệu quan sát được sẽ giống với phân bố của dữ liệu MovieLens 100k ban đầu ([0.06, 0.11, 0.27, 0.35, 0.21] trong tập dữ liệu gốc và [0.06, 0.10, 0.25, 0.42, 0.17] trên tập dữ liệu quan sát được)
 
 \subsubsection{Cách tiến hành}
-Sau khi có bộ dữ liệu quan sát được ta sẽ tiến hành huấn luyện 2 mô hình MF và MF-IPS trên tập dữ liệu này. Hai mô hình này sẽ được cross-validation để chọn tham số $\lambda$ khác nhau và tham số $d$ sẽ được cố định với $d = 20$. Ta sẽ tiến hành thay đổi giá trị $\alpha$ từ [0.0625, 0.125, 0.25, 0.5, 1] để đo lường độ lỗi của hai mô hình MF và MF-IPS với mức độ thiên lệch của dữ liệu giảm dần.
-\subsection{Kết quả}
-Bảng \ref{table:4_movielens} mô tả kết quả thu được của nhóm em với độ lỗi MSE trên 2 mô hình MF và MF-IPS khi tiến hành thay đổi mức độ thiên lệch dữ liệu bằng cách thay đổi giá trị của $\alpha$. Có thể thấy khi mức độ thiên lệch của dữ liệu cao (khi $\alpha$ nhỏ) thì độ lỗi trên 2 mô hình MF và MF-IPS rất cao; đặc biệt, độ lỗi của mô hình MF-IPS mặc dù dữ liệu bị thiên lệch rất nhiều nhưng vẫn có độ lỗi thấp hơn đáng kể khi so sánh với mô hình MF. Khi giảm dần mức độ thiên lệch dữ liệu ($\alpha$ lớn) độ lỗi trên 2 mô hình này có sự cải thiện đáng kể và gần như xê xích nhau không nhiều, mặc dù vậy mô hình MF-IPS vẫn cho độ lỗi thấp hơn mô hình MF. 
-
-\begin{table}[h]
-    \centering
-    \begin{tabular}{|c|c|c|}
-    \hline
-    alpha & MF & MF-IPS \\ \hline
-    0.0625 & 1.932 & 1.098 \\ \hline
-    0.125 & 0.843 & 0.398 \\ \hline
-    0.25 & 0.248 & 0.153 \\ \hline
-    0.5 & 0.113 & 0.097 \\ \hline
-    1 & 0.108 & 0.108 \\ \hline
-    \end{tabular}
-    \caption{Độ lỗi MSE của hai mô hình MF và MF-IPS khi học trên tập MovieLens giả lập với mức độ thiên lệch của dữ liệu giảm dần.}
-    \label{table:4_movielens}
-\end{table}
-
-Hình \ref{fig:4_movielens} minh họa rõ cho ta thấy sự cải thiện trong độ lỗi của 2 mô hình MF và MF-IPS thì mức độ thiên lệch của dữ liệu giảm dần.
+Sau khi có bộ dữ liệu quan sát được ta sẽ tiến hành huấn luyện 2 mô hình MF và MF-IPS trên tập dữ liệu này. Hai mô hình này sẽ được cross-validation để chọn tham số $\lambda$ khác nhau và tham số $d$ sẽ được cố định với $d = 20$. Ta sẽ tiến hành thay đổi giá trị $\alpha$ từ [0.0625, 0.125, 0.25, 0.5, 1] để điều chỉnh mức độ thiên lệch dữ liệu trên tập dữ liệu quan sát được được sử dụng để huấn luyện mô hình. Tập dữ liệu quan sát được sẽ được lấy từ tập dữ liệu MovieLens 100k giả lập tuân theo propensity của mỗi đánh giá, sao cho dữ liệu quan sát được chỉ chiếm 5\% tập dữ liệu MovieLens 100k giả lập.
+\subsubsection{Kết quả}
+Hình \ref{fig:4_movielens} mô tả kết quả thu được của nhóm em với độ lỗi MSE trên 2 mô hình MF và MF-IPS khi tiến hành thay đổi mức độ thiên lệch dữ liệu bằng cách thay đổi giá trị của $\alpha$.
 \begin{figure}[h]
     \centering
-    \includegraphics[width = \textwidth]{images/Chapter4/movielens.jpg}
+    \includegraphics{images/Chapter4/movielens.jpg}
     \caption{Hình ảnh minh họa sự cải thiện về độ lỗi của MF và MF-IPS khi thay đổi mức độ thiên lệch của dữ liệu}
     \label{fig:4_movielens}
 \end{figure}
+% \begin{table}[h]
+%     \centering
+%     \begin{tabular}{|c|c|c|}
+%     \hline
+%     alpha & MF & MF-IPS \\ \hline
+%     0.0625 & 1.932 & 1.098 \\ \hline
+%     0.125 & 0.843 & 0.398 \\ \hline
+%     0.25 & 0.248 & 0.153 \\ \hline
+%     0.5 & 0.113 & 0.097 \\ \hline
+%     1 & 0.108 & 0.108 \\ \hline
+%     \end{tabular}
+%     \caption{Độ lỗi MSE của hai mô hình MF và MF-IPS khi học trên tập MovieLens giả lập với mức độ thiên lệch của dữ liệu giảm dần.}
+%     \label{table:4_movielens}
+% \end{table}
+
+Khi $\alpha$ nhỏ mức độ thiên lệch của dữ liệu cao (trong dữ liệu quan sát được đa phần chỉ chứa điểm đánh giá 4 và 5) thì độ lỗi trên 2 mô hình MF và MF-IPS rất cao. Mặc dù vậy, độ lỗi của mô hình MF-IPS vẫn có độ lỗi thấp hơn nhiều mô hình MF truyền thống. 
+
+Khi $\alpha$ lớn mức độ thiên lệch dữ liệu của dữ liệu giảm dần (phân phối của các điểm đánh giá đều nhau hơn)
+độ lỗi trên 2 mô hình này có sự cải thiện đáng kể và gần như xê xích nhau không nhiều. Mặc dù vậy mô hình MF-IPS vẫn cho độ lỗi thấp hơn mô hình MF. 
+
+Tóm lại, khi dữ liệu bị thiên lệch nhiều phương pháp MF-IPS đã cho thấy độ hiệu quả của nó trong việc kiểm soát sự thiên lệch và cho kết quả cải thiện đáng kể trên tập dữ liệu bị thiên lệch này. Mặt khác, khi dữ liệu không bị thiên lệch (dữ liệu được phát sinh theo phân phối đều) phương pháp MF-IPS sẽ cho kết quả giống với phương pháp MF truyền thống, bởi vì lúc này dữ liệu không còn bị thiên lệch nên propensity của nó là như nhau trong mọi trường hợp làm cho MF và MF-IPS lúc này không có gì khác nhau.
 
 \section{Ảnh hưởng của việc ước lượng ma trận propensity tới việc học của MF-IPS}
 Trong phần này, nhóm em sẽ thiết kế các thí nghiệm để làm rõ ảnh hưởng của việc ước lượng ma trận propensity đến việc học của MF-IPS. Việc học của MF-IPS có thể bị ảnh hưởng bởi hiệu quả của việc ước lượng ma trận propensity, ta sẽ tiến hành xem xét mức độ hiệu quả của việc ước lượng ma trận propensity thông qua hai thiết lập sau:

@@ -1,2 +1,23 @@
 \chapter{Tổng kết và hướng phát triển}
 \label{Chapter5}
+
+\section{Tổng kết}
+
+Trong khóa luận này, nhóm em đã tìm hiểu về một phương pháp hiệu quả và mạnh mẽ để giải quyết vấn đề dữ liệu bị lệch dựa trên propensity. Phương pháp này mang lại nhiều ưu điểm như:
+\begin{itemize}
+    \item \textbf{Đơn giản để thực hiện}: về cơ bản, ta chỉ cần sử dụng một số phương pháp đơn giản như ''Naive bayes'' hay ''Logistic regression'' để ước lượng propensity, sau đó ta đơn thuần áp dụng một thay đổi nhỏ ở hàm mục tiêu bằng cách nhân với nghịch đảo của propensity.
+    \item \textbf{Hiệu quả}: bằng các thí nghiệm chương \ref{Chapter4}, ta thấy được phương pháp MF-IPS cải thiện đáng kể độ lỗi của mô hình trên các tập dữ liệu thế giới thực so với phương pháp MF. Trong các tập dữ liệu này, tập training bị lệch do người dùng tự chọn sản phẩm để đánh giá, còn tập test không bị lệch do các sản phẩm được hiển thị ngẫu nhiên tới người dùng theo phân phối đều, và người dùng sẽ đánh giá các sản phẩm được hiển thị ngẫu nhiên này. Do đó, tập test thể hiện được chính xác sở thích tự nhiên của người dùng. Chính vì vậy, việc giảm độ lỗi trên tập test so với phương pháp MF thông thường phần nào cho thấy rằng phương pháp MF-IPS mô hình hóa sở thích của người dùng tốt hơn.
+    \item \textbf{Không cần sử dụng đến các biến ẩn}: ta thấy được rằng việc người dùng tự đánh giá sẽ phụ thuộc vào nhiều yếu tố tiềm ẩn như sản phẩm có được gợi ý bởi bạn bè của người dùng hay không, tâm trạng của người dùng lúc xem phim hay sử dụng sản phẩm đó có tích cực hay tiêu  cực... Với phương pháp MF-IPS này, ta không cần phải kiểm soát các biến ẩn đó mà vẫn có thể phản ánh chính xác được phần nào sở thích của người dùng.
+    \item \textbf{Ít giả định về mô hình hơn}: Với các mô hình học máy thông thường, ta cần phải có nhiều giả định, ví dụ như tập dữ liệu quan sát được và dữ liệu thực tế phải cùng phân phối với nhau. Nói cách khác là ta cần giả định dữ liệu mà ta quan sát được mang tính đại diện cho dữ liệu thực tế. Tuy nhiên ta có thể thấy rằng ta có thể học được tốt trên tập dữ liệu MNAR - tập dữ liệu không được phát sinh ngẫu nhiên theo phân phối đều từ tập dữ liệu thực tế, bằng cách đánh lại trọng số trên tập dữ liệu quan sát được. 
+\end{itemize}
+
+Bên cạnh những ưu điểm trên, phương pháp MF-IPS cũng có một số hạn chế nhất định:
+\begin{itemize}
+    \item Hạn chế lớn nhất của phương pháp này là việc ước lượng được các xu hướng chính xác một cách hoàn hảo gần như là điều không thể, và kết quả của việc ước lượng này sẽ ảnh hưởng đến quá trình học của MF-IPS.
+    \item Phương pháp MF-IPS có thể khiến mô hình của ta sẽ có phương sai cao, khiến cho mô hình không ổn định. 
+\end{itemize}
+
+
+
+\section{Hướng phát triển}
+Do bước ước lượng xu hướng và bước Matrix Factorization tách biệt với nhau, nên ta có thể dễ dàng ứng dụng bước ước lượng xu hướng cho các bài toán học máy khác, nếu như dữ liệu ta thu thập được trong bài toán đó gặp vấn đề MNAR, việc ước lượng xu hướng có thể dễ dàng thực hiện bằng nhiều phương pháp ước lượng xác suất có điều kiện khác nhau, ta có thể tham khảo thêm ở bài báo \cite{estimate_propensity}. Ngoài ra, với việc kết nối giữa bài toán xây dựng hệ thống gợi ý và bài toán suy diễn nhân quả, ta cũng có thể sử dụng nhiều phương pháp hiệu quả hơn của bài toán suy diễn nhân quả để xây dựng hệ thống gợi ý với hiệu quả tốt hơn, phản ánh được chính xác hơn sở thích của người dùng. 

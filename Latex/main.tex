@@ -22,7 +22,9 @@
 	sorting=nty,
 	backend=bibtex,
 	defernumbers=true]{biblatex}
-\usepackage[unicode]{hyperref} % Bookmark tiếng Việt
+% \usepackage[unicode]{hyperref} % Bookmark tiếng Việt
+
+\usepackage[hidelinks]{hyperref}
 \addbibresource{References/references.bib}
 
 \makeatletter
@@ -72,6 +74,7 @@
 \newtheorem{theorem}{Định lý}[section]
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}[theorem]{Bổ đề}
+
 
 
 % Bảng biểu
@@ -156,7 +159,7 @@
 % \include{proposalFull}
 
 % Mục lục, danh sách hình, danh sách bảng
-\addcontentsline{toc}{chapter}{Mục lục}
+% \addcontentsline{toc}{chapter}{Mục lục}
 \tableofcontents
 \listoffigures
 \listoftables
